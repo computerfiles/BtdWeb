@@ -393,8 +393,8 @@
             <div class="home-grid">
                 <div class="info-card">
                     <h3>Who We Are</h3>
-                    <p>A proud branch of the <b>Protestant Group (GP)</b>, Bethesda is one of the three historic choirs
-                        in our school. We are a family fire, 35 years strong.</p>
+                    <p>A proud branch of the <b>Protestant Group (Groupé Protestant)</b>, Bethesda is one of the historic choirs
+                        in our school. We are fire, 35 years strong.</p>
                     <ul class="slogan-list">
                         <li>"Bethesda is our heart logo"</li>
                         <li>"Bethesda Siamo Fuoco"</li>
@@ -441,7 +441,7 @@
 
         <footer>
             <div class="social-icons">
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://instagram.com/bethesda_01_official"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-youtube"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
             </div>
@@ -468,18 +468,19 @@
 
         /* --- DATA --- */
         const bethesdaEvents = [
-            { title: "Ibirori Byera", desc: "A powerful night of meditation.", date: "Every Term", file: "images/ibirori1.jpeg", type: "image" },
-            { title: "Rehearsal Preview", desc: "Preparing for Sunday.", date: "Weekly", file: "videos/test.mp4", type: "video" }
+            { title: "Ibirori Byera", desc: "A powerful night of meditation.", date: "Dec 25 2025", file: "images/ibirori1.jpeg", type: "image" },
+            { title: "Sample song", desc: "I used it when editing", date: "Weekly", file: "videos/test.mp4", type: "video" }
         ];
 
         /* Renamed all commas to underscores in paths */
         const familyPhotos = [
-            { path: "images/comite.jpeg", desc: "Leadership Team", isComite: true, keywords: "leader comite boss" },
-            { path: "images/bisetsa_lucky.jpeg", desc: "Bethesda Fellowship", isComite: false, keywords: "lucky bisetsa friends" },
-            { path: "images/service1.jpeg", desc: "Igicaniro Prayer", isComite: false, keywords: "prayer morning" },
-            { path: "images/david_olivier.jpeg", desc: "Praising the Most High", isComite: false, keywords: "david olivier sing" },
-            { path: "images/comite2.jpeg", desc: "Working in Grace", isComite: true, keywords: "leader comite work" },
-            { path: "images/service_pray.jpeg", desc: "In Worship", isComite: false, keywords: "worship service" }
+            { path: "images/service3.jpeg", desc: "Damu Ya Yesu service", isComite: false, keywords: "sevice Damu Ya Yesu service praying praise worship" },
+            { path: "images/comite.jpeg", desc: "25/26 Comite", isComite: true, keywords: "leader 25/26 Comite boss" },
+            { path: "images/service_pray.jpeg", desc: "Damu Ya Yesu service", isComite: false, keywords: "worship Damu Ya Yesu service service" },
+            { path: "images/bisetsa_lucky.jpeg", desc: "Pr Bisetsa and Lucky", isComite: true, keywords: "lucky comite bisetsa friends" },
+            { path: "images/service1.jpeg", desc: "Damu Ya Yesu service", isComite: false, keywords: "prayer Damu Ya Yesu service morning" },
+            { path: "images/david_olivier.jpeg", desc: "Dr Olivier and David", isComite: true, keywords: "david comite olivier sing" },
+            { path: "images/comite2.jpeg", desc: "25/26 Comite", isComite: true, keywords: "leader 25/26 Comite  work" }
         ];
 
         /* --- RENDER FUNCTIONS --- */
@@ -508,7 +509,7 @@
             gallery.innerHTML = data.map(item => `
                 <div class="gallery-item" onclick="enlargeImage('${item.path}')">
                     ${item.isComite ? `
-                        <div class="comite-badge" title="Leadership Team">
+                        <div class="comite-badge" title="">
                             <span class="comite-text">COMITÉ</span>
                             <span class="star-icon">★</span>
                         </div>
