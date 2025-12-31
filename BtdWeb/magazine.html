@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bethesda Committee Magazine</title>
+    <title>Committee Photo Magazine</title>
     <link rel="icon" type="image/png" href="images/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display..." rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --primary-dark: #111;
@@ -25,22 +28,11 @@
             color: var(--primary-dark);
         }
 
-        /* --- Magazine Header --- */
         header {
             text-align: center;
             padding: 5rem 1rem 3rem;
             background: linear-gradient(to bottom, #fff 0%, var(--bg-cream) 100%);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .issue-date {
-            font-size: 0.85rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--accent-teal);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: block;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         h1.magazine-title {
@@ -59,43 +51,25 @@
             font-size: 1.2rem;
         }
 
-        /* --- Timeline / Year Selector --- */
-        .year-nav-wrapper {
+        .committee-timeline {
             display: flex;
             justify-content: center;
-            padding: 3rem 0;
-        }
-
-        .year-selector {
-            display: flex;
             align-items: center;
-            gap: 2rem;
-            position: relative;
-        }
-
-        /* Line decoration behind years */
-        .year-selector::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -20px;
-            right: -20px;
-            height: 1px;
-            background: #ddd;
-            z-index: 0;
+            gap: 40px;
+            padding: 3rem 0;
+            background: var(--bg-cream);
         }
 
         .year-btn {
-            background: var(--bg-cream); /* Covers the line */
+            background: none;
             border: none;
             font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            color: #aaa;
+            font-size: 1.4rem;
+            color: #bbb;
             cursor: pointer;
-            padding: 0 15px;
-            z-index: 1; /* Sits on top of line */
-            transition: all 0.3s ease;
+            transition: 0.3s;
             position: relative;
+            z-index: 1;
         }
 
         .year-btn:hover {
@@ -106,14 +80,21 @@
             color: var(--primary-dark);
             font-weight: 700;
             transform: scale(1.1);
-            background: #fff;
-            border: 1px solid var(--primary-dark);
-            padding: 5px 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        /* --- The Grid --- */
-        .committee-grid {
+        .year-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-teal);
+            border-radius: 50%;
+        }
+
+        .photo-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 3rem;
@@ -122,66 +103,147 @@
             padding: 0 2rem 5rem;
         }
 
-        /* --- Individual Member Card --- */
-        .member-card {
+        /* --- CIRCULAR MEMBER CARD --- */
+        .photo-item {
             background: var(--white);
-            border-top: 3px solid var(--accent-teal);
-            padding: 2rem;
+            border-top: 4px solid var(--accent-teal);
+            padding: 2.5rem 2rem;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
         }
 
-        .member-card:hover {
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .photo-item:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
 
-        /* President Special Styling */
-        .member-card.president-card {
-            border-top: 3px solid var(--accent-gold);
-            background: #fffdf5; /* Slight gold tint */
+        .photo-item.president-card {
+            border-top-color: var(--accent-gold);
+            background: #fffdf9;
+        }
+
+        /* --- STACKED FAN & SLIDESHOW ADDITIONS --- */
+        .img-container {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 1.5rem;
         }
 
         .img-frame {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%; /* Circular portrait */
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
             overflow: hidden;
-            margin-bottom: 1.5rem;
-            border: 4px solid #fff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .img-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            position: absolute;
+            top: 0;
+            left: 10px;
+            z-index: 2;
             transition: transform 0.5s ease;
         }
 
-        .member-card:hover .img-frame img {
-            transform: scale(1.1);
+        .photo-item:hover .img-frame {
+            transform: scale(1.05);
         }
 
-        .role-badge {
-            font-size: 0.7rem;
-            font-weight: 600;
+        .fan-layer {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            top: 5px;
+            left: 25px;
+            transform: rotate(8deg);
+            z-index: 1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            opacity: 0.6;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-item:hover .fan-layer {
+            transform: rotate(15deg) translate(5px, 5px);
+        }
+
+        .fan-layer img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .slide-track img {
+            width: 200px;
+            height: 200px;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        /* --- DOTS --- */
+        .dots-container {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 1rem;
+            justify-content: center;
+            height: 10px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ddd;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            background: var(--accent-teal);
+            width: 12px;
+            border-radius: 4px;
+        }
+
+        .president-card .dot.active {
+            background: var(--accent-gold);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .member-role {
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: var(--accent-teal);
             margin-bottom: 0.5rem;
         }
 
-        .president-card .role-badge {
+        .president-card .member-role {
             color: var(--accent-gold);
         }
 
         .member-name {
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin: 0 0 1.5rem 0;
             color: var(--primary-dark);
         }
@@ -191,195 +253,197 @@
             font-family: 'Playfair Display', serif;
             font-style: italic;
             color: var(--text-gray);
-            font-size: 1rem;
+            font-size: 1.1rem;
             line-height: 1.6;
-            margin-top: auto; /* Pushes to bottom */
-            padding-top: 1.5rem;
+            margin-top: auto;
+            padding-top: 2rem;
             border-top: 1px solid #eee;
         }
 
-        /* Decorative quote mark */
         .quote-box::before {
             content: '“';
             font-family: serif;
-            font-size: 3rem;
+            font-size: 4rem;
             color: #eee;
             position: absolute;
-            top: -10px;
+            top: -15px;
             left: 50%;
             transform: translateX(-50%);
             line-height: 0;
         }
 
         @media (max-width: 768px) {
-            h1.magazine-title { font-size: 2.5rem; }
-            .year-selector { gap: 1rem; }
-            .year-btn { font-size: 1rem; }
+            h1.magazine-title {
+                font-size: 2.5rem;
+            }
+
+            .committee-timeline {
+                gap: 20px;
+            }
         }
     </style>
 </head>
-<body>
 
+<body>
     <header>
-        <span class="issue-date">Est. 2025</span>
-        <h1 class="magazine-title">Bethesda Family</h1>
-        <p class="subtitle">Committee Recollections & Testimonies</p>
+        <h1 >COMMITTEE RECOLLECTIONS</h1>
+        <p class="subtitle">A Visual Journey of Faith and Service</p>
     </header>
 
-    <nav class="year-nav-wrapper">
-        <div class="year-selector">
-            <button class="year-btn">2027</button>
-            <button class="year-btn">2026</button>
-            <button class="year-btn active" data-year="2025-2026">2025</button>
-            <button class="year-btn">2024</button>
-        </div>
-    </nav>
+    <div class="committee-timeline" id="timeline">
+        <button class="year-btn">2026</button>
+        <button class="year-btn active" data-target="2025-2026">2025</button>
+        <button class="year-btn">2024</button>
+        <button class="year-btn">2023</button>
+    </div>
 
-    <main class="committee-grid" id="magazine-content">
-        </main>
+    <main class="photo-grid" id="magazine-gallery"></main>
 
     <script>
-        // 1. DATA SOURCE
-       const committeeMembers = [
+        const committeeMembers = [
             {
                 name: "BISETSA Adolphe",
                 role: "President",
                 year: "2025-2026",
                 words: "Shepherding this family is a grace. We lead by the Spirit to ensure the fire on the altar never goes out. (Leviticus 6:13)<br>#ImanaNiData",
-                img: "images/bisetsa1.jpeg"
+                img: ["images/bisetsa1.jpeg", "images/bisetsa2.jpeg", "images/bisetsa3.jpeg", "images/bisetsa_lucky.jpeg"]
             },
             {
                 name: "KWIZERA Enock",
                 role: "Vice President",
                 year: "2025-2026",
                 words: "Strength lies in unity. I stand to uphold the vision, for where two or more agree, He is in our midst. (Matthew 18:20)",
-                img: "images/enock1.jpeg"
+                img: ["images/enock1.jpeg"]
             },
             {
                 name: "NYIRINDEKWE Lucky",
                 role: "Dirigeant",
                 year: "2025-2026",
                 words: "Leading the melody is leading the soul. I will sing with the spirit and with the understanding also. (1 Corinthians 14:15)",
-                img: "images/lucky1.jpeg"
+                img: ["images/lucky1.jpeg", "images/lucky2.jpeg", "images/bisetsa_lucky.jpeg"]
             },
             {
                 name: "KARABO Kenia",
                 role: "Dirigeante",
                 year: "2025-2026",
                 words: "In every harmony, we find His grace. May we with one mind and one mouth glorify God. (Romans 15:6)",
-                img: "images/kenia1.jpeg"
+                img: ["images/kenia1.jpeg"]
             },
             {
                 name: "Frank",
                 role: "Dirigeant",
                 year: "2025-2026",
                 words: "Service is our heartbeat. Whatever we do, we do it heartily, as to the Lord and not to men. (Colossians 3:23)",
-                img: "images/frank1.jpeg"
+                img: ["images/frank1.jpeg"]
             },
             {
                 name: "NGABONZIZA Olivier",
                 role: "Dirigeant",
                 year: "2025-2026",
                 words: "Worship is our highest calling. He has put a new song in my mouth, even praise unto our God. (Psalm 40:3)",
-                img: "images/olivier1.jpeg"
+                img: ["images/olivier1.jpeg", "images/david_olivier.jpeg"]
             },
             {
                 name: "SHIMWA UWACU NISA",
                 role: "IT Technician",
                 year: "2025-2026",
                 words: "Using technology to amplify the Word. If the trumpet makes an uncertain sound, who will prepare for battle? (1 Corinthians 14:8)",
-                img: "images/nisa1.jpeg"
+                img: ["images/nisa1.jpeg"]
             },
             {
                 name: "IGIRANEZA Kevine",
                 role: "Intercessor",
                 year: "2025-2026",
                 words: "The engine of this choir is prayer. The effectual fervent prayer of a righteous man avails much. (James 5:16)",
-                img: "images/kevine1.jpeg"
+                img: ["images/kevine1.jpeg"]
             },
-            { 
-                name: "UWAMAHORO Anitha", 
-                role: "Mère", 
-                year: "2025-2026", 
-                words: "My heart is to nurture this family with the love of Christ. I watch over the ways of this household, ensuring no one walks alone. (Proverbs 31:27)", 
-                img: "images/anitha1.jpeg" 
+            {
+                name: "UWAMAHORO Anitha",
+                role: "Mère",
+                year: "2025-2026",
+                words: "My heart is to nurture this family with the love of Christ. I watch over the ways of this household, ensuring no one walks alone. (Proverbs 31:27)",
+                img: ["images/anitha1.jpeg"]
             }
         ];
 
-        // 2. MAIN CLASS
         class CommitteeMagazine {
             constructor(data) {
-                this.data = data;
-                this.container = document.getElementById('magazine-content');
+                this.members = data;
+                this.gallery = document.getElementById('magazine-gallery');
+                this.timeline = document.getElementById('timeline');
                 this.init();
             }
 
             init() {
-                // Initialize with current active year
                 this.render("2025-2026");
-                this.setupListeners();
+                this.addEventListeners();
+            }
+
+            addEventListeners() {
+                this.timeline.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('year-btn')) {
+                        document.querySelectorAll('.year-btn').forEach(btn => btn.classList.remove('active'));
+                        e.target.classList.add('active');
+                        const year = e.target.innerText === "2025" ? "2025-2026" : e.target.innerText;
+                        this.render(year);
+                    }
+                });
             }
 
             render(year) {
-                this.container.innerHTML = '';
-                
-                // Filter data
-                const filtered = this.data.filter(member => member.year === year);
+                this.gallery.innerHTML = '';
+                const filtered = this.members.filter(m => m.year === year);
 
-                if (filtered.length === 0) {
-                    this.container.innerHTML = '<p style="text-align:center; width:100%; color:#999;">No records found for this year.</p>';
-                    return;
-                }
+                filtered.forEach((member, index) => {
+                    const isPresident = member.role.toLowerCase() === 'president';
+                    const photos = Array.isArray(member.img) ? member.img : [member.img];
+                    const hasMultiple = photos.length > 1;
 
-                // Generate Cards
-                filtered.forEach(member => {
-                    // Check if president for special styling
-                    const isPresident = member.role.toLowerCase().includes('president') && !member.role.toLowerCase().includes('vice');
-                    const extraClass = isPresident ? 'president-card' : '';
+                    const dotsHTML = hasMultiple ? photos.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}"></div>`).join('') : '';
+                    const imagesHTML = photos.map(src => `<img src="${src}" onerror="this.src='https://via.placeholder.com/200'">`).join('');
+                    const fanHTML = hasMultiple ? `<div class="fan-layer" id="fan-${index}"><img src="${photos[1]}"></div>` : '';
 
-                    const cardHTML = `
-                        <article class="member-card ${extraClass}">
-                            <div class="img-frame">
-                                <img src="${member.img}" alt="${member.name}" onerror="this.src='https://via.placeholder.com/300x300?text=Member'">
+                    const itemHTML = `
+                        <div class="photo-item ${isPresident ? 'president-card' : ''}" style="animation-delay: ${index * 0.1}s">
+                            <div class="img-container">
+                                ${fanHTML}
+                                <div class="img-frame">
+                                    <div class="slide-track" id="track-${index}">
+                                        ${imagesHTML}
+                                    </div>
+                                </div>
                             </div>
-                            <div class="role-badge">${member.role}</div>
-                            <h2 class="member-name">${member.name.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}</h2> <div class="quote-box">
-                                ${member.words}
+                            <div class="dots-container" id="dots-${index}">
+                                ${dotsHTML}
                             </div>
-                        </article>
+                            <span class="member-role">${member.role}</span>
+                            <h3 class="member-name">${member.name}</h3>
+                            <div class="quote-box">"${member.words}"</div>
+                        </div>
                     `;
-                    this.container.insertAdjacentHTML('beforeend', cardHTML);
+                    this.gallery.insertAdjacentHTML('beforeend', itemHTML);
+                    if (hasMultiple) this.startSlideshow(index, photos);
                 });
             }
 
-            setupListeners() {
-                const buttons = document.querySelectorAll('.year-btn');
-                buttons.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        // UI Update
-                        buttons.forEach(b => b.classList.remove('active'));
-                        e.target.classList.add('active');
-
-                        // Data Update
-                        const selectedYear = e.target.dataset.year || e.target.innerText;
-                        
-                        // Handle logic for years not yet in data
-                        if(selectedYear === "2025" || selectedYear === "2025-2026") {
-                            this.render("2025-2026");
-                        } else {
-                            this.render(selectedYear); // Likely empty for now
-                        }
-                    });
-                });
+            startSlideshow(index, photos) {
+                let current = 0;
+                setInterval(() => {
+                    const track = document.getElementById(`track-${index}`);
+                    const fan = document.getElementById(`fan-${index}`);
+                    const dots = document.getElementById(`dots-${index}`).querySelectorAll('.dot');
+                    if (!track) return;
+                    current = (current + 1) % photos.length;
+                    track.style.transform = `translateX(-${current * 100}%)`;
+                    if (fan) fan.querySelector('img').src = photos[(current + 1) % photos.length];
+                    dots.forEach(d => d.classList.remove('active'));
+                    dots[current].classList.add('active');
+                }, 4000);
             }
         }
 
-        // 3. EXECUTION
-        const app = new CommitteeMagazine(committeeMembers);
-
+        new CommitteeMagazine(committeeMembers);
     </script>
 </body>
 
 </html>
-
-
