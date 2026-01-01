@@ -20,6 +20,75 @@
             --white: #ffffff;
         }
 
+        /* --- LOADING SPINNER STYLES --- */
+        #loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-cream);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.6s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 139, 163, 0.1);
+            border-top: 5px solid var(--accent-teal);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            margin-top: 15px;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--accent-teal);
+        }
+
+        /* --- MUSIC CONTROL STYLES --- */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white);
+            border: 1px solid var(--accent-teal);
+            padding: 10px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-teal);
+            transition: 0.3s;
+        }
+
+        .music-control:hover {
+            transform: scale(1.05);
+            background: var(--bg-cream);
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -103,7 +172,6 @@
             padding: 0 2rem 5rem;
         }
 
-        /* --- CIRCULAR MEMBER CARD --- */
         .photo-item {
             background: var(--white);
             border-top: 4px solid var(--accent-teal);
@@ -134,7 +202,6 @@
             background: #fffdf9;
         }
 
-        /* --- STACKED FAN & SLIDESHOW ADDITIONS --- */
         .img-container {
             position: relative;
             width: 220px;
@@ -154,10 +221,6 @@
             left: 10px;
             z-index: 2;
             transition: transform 0.5s ease;
-        }
-
-        .photo-item:hover .img-frame {
-            transform: scale(1.05);
         }
 
         .fan-layer {
@@ -180,12 +243,6 @@
             transform: rotate(15deg) translate(5px, 5px);
         }
 
-        .fan-layer img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
         .slide-track {
             display: flex;
             width: 100%;
@@ -200,7 +257,6 @@
             object-fit: cover;
         }
 
-        /* --- DOTS --- */
         .dots-container {
             display: flex;
             gap: 6px;
@@ -223,11 +279,6 @@
             border-radius: 4px;
         }
 
-        .president-card .dot.active {
-            background: var(--accent-gold);
-        }
-
-        /* --- TYPOGRAPHY --- */
         .member-role {
             font-size: 0.75rem;
             font-weight: 700;
@@ -235,10 +286,6 @@
             letter-spacing: 2px;
             color: var(--accent-teal);
             margin-bottom: 0.5rem;
-        }
-
-        .president-card .member-role {
-            color: var(--accent-gold);
         }
 
         .member-name {
@@ -285,6 +332,21 @@
 </head>
 
 <body>
+    <div id="loader-wrapper">
+        <div class="spinner"></div>
+        <p class="loading-text">Preparing the Recollections...</p>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="audio/unyobore.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <span id="musicIcon">🎵</span>
+        <span id="musicText">Play Music</span>
+    </div>
+
     <header>
         <h1>COMMITTEE RECOLLECTIONS</h1>
         <p class="subtitle">A Visual Journey of Faith and Service</p>
@@ -300,13 +362,30 @@
     <main class="photo-grid" id="magazine-gallery"></main>
 
     <script>
+        // Music Toggle Function
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const icon = document.getElementById('musicIcon');
+            const text = document.getElementById('musicText');
+
+            if (music.paused) {
+                music.play();
+                icon.innerText = "⏸";
+                text.innerText = "Pause Music";
+            } else {
+                music.pause();
+                icon.innerText = "🎵";
+                text.innerText = "Play Music";
+            }
+        }
+
         const committeeMembers = [
             {
                 name: "BISETSA Adolphe",
                 role: "President",
                 year: "2025-2026",
                 words: "Shepherding this family is a grace. We lead by the Spirit to ensure the fire on the altar never goes out. (Leviticus 6:13)<br>#ImanaNiData",
-                img: ["images/bisetsa1.jpeg", "images/bisetsa2.jpeg", "images/bisetsa3.jpeg", "images/bisetsa_lucky.jpeg","images/bisetsa4.jpeg"]
+                img: ["images/bisetsa1.jpeg", "images/bisetsa2.jpeg", "images/bisetsa3.jpeg", "images/bisetsa_lucky.jpeg", "images/bisetsa4.jpeg"]
             },
             {
                 name: "KWIZERA Enock",
@@ -369,7 +448,7 @@
                 role: "Père",
                 year: "2025-2026",
                 words: "As a father to this house, my prayer is that we walk worthy of God, who calls us into His own kingdom and glory. (1 Thessalonians 2:12)",
-                img: ["images/yves1.jpg","images/yves2.jpg"]
+                img: ["images/yves1.jpg", "images/yves2.jpg"]
             },
             {
                 name: "IRUMVA Daniel",
@@ -389,6 +468,13 @@
             }
 
             init() {
+                // Remove loader when page is fully loaded
+                window.addEventListener('load', () => {
+                    const loader = document.getElementById('loader-wrapper');
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 600);
+                });
+
                 this.render("2025-2026");
                 this.addEventListeners();
             }
